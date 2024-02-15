@@ -1,0 +1,78 @@
+﻿@page
+@model CDNDeveloperNetwork.Pages.UserModel
+@{
+    ViewData["Title"] = "User Management";
+}
+
+<h1>User Management</h1>
+
+<form id="registerForm">
+    <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" class="form-control" id="username" name="username" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+    </div>
+    <div class="form-group">
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="text" class="form-control" id="phoneNumber" name="phoneNumber">
+    </div>
+    <div class="form-group">
+        <label for="skillsets">Skillsets:</label>
+        <input type="text" class="form-control" id="skillsets" name="skillsets">
+    </div>
+    <div class="form-group">
+        <label for="hobby">Hobby:</label>
+        <input type="text" class="form-control" id="hobby" name="hobby">
+    </div>
+    <button type="submit" class="btn btn-primary">Register User</button>
+</form>
+
+<hr />
+
+<h2>Registered Users:</h2>
+<ul id="userList"></ul>
+
+@section Scripts {
+    <script>
+        async function fetchUsers() {
+            const response = await fetch('/api/user');
+            const data = await response.json();
+            const userList = document.getElementById('userList');
+            userList.innerHTML = '';
+            data.forEach(user => {
+                const li = document.createElement('li');
+                li.textContent = user.username; // Assuming username is a property of the user object
+                userList.appendChild(li);
+            });
+        }
+
+        async function registerUser(event) {
+            event.preventDefault();
+            const form = document.getElementById('registerForm');
+            const formData = new FormData(form);
+            const userObject = {};
+            formData.forEach((value, key) => {
+                userObject[key] = value;
+            });
+            const response = await fetch('/api/user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(userObject)
+            });
+            if (response.ok) {
+                form.reset();
+                fetchUsers();
+            } else {
+                console.error('Failed to register user');
+            }
+        }
+
+        document.getElementById('registerForm').addEventListener('submit', registerUser);
+        fetchUsers();
+    </script>
+}
