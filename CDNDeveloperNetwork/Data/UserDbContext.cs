@@ -1,8 +1,5 @@
-
-using global::CDNDeveloperNetwork.Models;
-// UserDbContext.cs
 using Microsoft.EntityFrameworkCore;
-using CDNDeveloperNetwork.Models; // Assuming your User model is in this namespace
+using CDNDeveloperNetwork.Models;
 
 namespace CDNDeveloperNetwork.Data
 {
@@ -10,9 +7,8 @@ namespace CDNDeveloperNetwork.Data
     {
         public DbSet<User> Users { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public UserDbContext(DbContextOptions<UserDbContext> options) : base(options)
         {
-            optionsBuilder.UseSqlServer("Server=R_SIVAN\\SQLEXPRESS;Database=CDNDeveloperNetwork;Trusted_Connection=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
