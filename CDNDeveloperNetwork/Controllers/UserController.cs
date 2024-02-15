@@ -1,4 +1,4 @@
-﻿using CDNDeveloperNetwork.Data;
+using CDNDeveloperNetwork.Data;
 using CDNDeveloperNetwork.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
