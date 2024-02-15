@@ -88,3 +88,6 @@ Deletes a user with the specified ID.
 
 Contributing
 Contributions are welcome! Please follow the contribution guidelines.
+
+Note
+WeatherForcast.cs can be ignored
